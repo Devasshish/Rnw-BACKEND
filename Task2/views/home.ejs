@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <h1>TODO TASK</h1>
+  <a href="/add">Add New Task</a>
+  <br>
+  <table border="1">
+    <tr>
+      <th>ID</th>
+      <th>Desc</th>
+      <th colspan="2">Actions</th>
+    </tr>
+    <% tasks.forEach((task)=>{ %>
+      <tr>
+
+        <td>
+          <%= task.id %>
+        </td>
+        <td>
+          <%= task.name %>
+        </td>
+        <td>
+          <a href="/edit/<%= task.id %>">
+
+            <button>Edit</button>
+          </a>
+        </td>
+        <td>
+          <a href="/delete/<%= task.id %>">
+          <button>Delete</button>
+          </a>
+        </td>
+      </tr>
+    <% }) %>
+
+  </table>
+</body>
+</html>
