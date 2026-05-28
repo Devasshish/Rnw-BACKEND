@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500">
+
+    <form 
+        action="/add" 
+        method="post" 
+        enctype="multipart/form-data"
+        class="w-[420px] bg-white/20 backdrop-blur-lg border border-white/30 shadow-2xl rounded-3xl p-8"
+    >
+
+        <h1 class="text-4xl font-extrabold text-center text-white mb-8 drop-shadow-lg">
+            📚 Add New Book
+        </h1>
+
+        <!-- Book Name -->
+        <div class="mb-5">
+            <label 
+                for="name"
+                class="block text-white font-semibold mb-2"
+            >
+                Book Name
+            </label>
+
+            <input 
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter Book Name" required
+                class="w-full p-3 rounded-xl bg-white/80 border-none outline-none focus:ring-4 focus:ring-pink-300 text-gray-700"
+            >
+        </div>
+
+        <!-- Author -->
+        <div class="mb-5">
+            <label 
+                for="author"
+                class="block text-white font-semibold mb-2"
+            >
+                Author Name
+            </label>
+
+            <input 
+                type="text"
+                id="author"
+                name="author" required
+                placeholder="Enter Author Name"
+                class="w-full p-3 rounded-xl bg-white/80 border-none outline-none focus:ring-4 focus:ring-yellow-300 text-gray-700"
+            >
+        </div>
+
+        <!-- Category -->
+        <div class="mb-5">
+            <label 
+                for="cat"
+                class="block text-white font-semibold mb-2"
+            >
+                Book Category
+            </label>
+
+            <input 
+                type="text"
+                id="cat"
+                name="cat"
+                required
+                placeholder="Enter Book Category"
+                class="w-full p-3 rounded-xl bg-white/80 border-none outline-none focus:ring-4 focus:ring-purple-300 text-gray-700"
+            >
+        </div>
+
+        <!-- Price -->
+        <div class="mb-5">
+            <label 
+                for="price"
+                class="block text-white font-semibold mb-2"
+            >
+                Book Price
+            </label>
+
+            <input 
+                type="number"
+                id="price"
+                name="price"
+                required
+                placeholder="Enter Book Price"
+                class="w-full p-3 rounded-xl bg-white/80 border-none outline-none focus:ring-4 focus:ring-blue-300 text-gray-700"
+            >
+        </div>
+
+        <!-- File Upload -->
+        <div class="mb-6">
+            <label 
+                for="img"
+                class="block text-white font-semibold mb-2"
+            >
+                Upload Book Image
+            </label>
+
+            <input 
+                type="file"
+                id="img"
+                name="img"
+                required
+                class="w-full bg-white/80 rounded-xl p-2 text-gray-700"
+            >
+        </div>
+
+        <!-- Button -->
+        <button 
+            type="submit"
+            class="w-full py-3 rounded-xl bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 text-white font-bold text-lg shadow-lg hover:scale-105 hover:shadow-pink-500/50 transition duration-300"
+        >
+            ✨ Add Book
+        </button>
+
+    </form>
+
+</body>
+</html>
