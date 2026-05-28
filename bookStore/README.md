@@ -6,7 +6,7 @@ A full-stack web application for managing a book store with Create, Read, Update
 
 ## 📹 Tutorial Video
 
-**Watch the explanation video here:** [https://drive.google.com/file/d/1TqLvJgZebb9grO6hw_9e0yHp4Fh70s8H/view?usp=drive_link](#)
+**Watch the explanation video here:** [https://drive.google.com/file/d/1TqLvJgZebb9grO6hw_9e0yHp4Fh70s8H/view?usp=drive_link](#https://drive.google.com/file/d/1TqLvJgZebb9grO6hw_9e0yHp4Fh70s8H/view?usp=drive_link)
 
 ---
 
