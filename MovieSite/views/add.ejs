@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Upload Movie</title>
+
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background: #0f0f0f;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .container{
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        h1{
+            text-align: center;
+            margin-bottom: 35px;
+            color: crimson;
+            font-size: 42px;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .inputBox{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label{
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        input,
+        textarea{
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            color: white;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input::placeholder,
+        textarea::placeholder{
+            color: #888;
+        }
+
+        textarea{
+            resize: vertical;
+        }
+
+        .sectionTitle{
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: crimson;
+            font-size: 24px;
+        }
+
+        .genreItem{
+            margin-bottom: 12px;
+        }
+
+        .castCard{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+        }
+
+        .addBtn{
+            width: fit-content;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 12px;
+            background: #222;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .addBtn:hover{
+            background: crimson;
+        }
+
+        .submitBtn{
+            margin-top: 20px;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: crimson;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submitBtn:hover{
+            transform: scale(1.02);
+        }
+
+        .checkbox{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox input{
+            width: 18px;
+            height: 18px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Upload Movie</h1>
+
+        <form 
+            action="/add" 
+            method="POST" 
+            enctype="multipart/form-data"
+        >
+
+            <!-- MOVIE NAME -->
+
+            <div class="inputBox">
+                <label>Movie Name</label>
+
+                <input 
+                    type="text" 
+                    name="movieName"
+                    placeholder="Enter Movie Name"
+                    required
+                >
+            </div>
+
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="inputBox">
+                <label>Description</label>
+
+                <textarea 
+                    name="description"
+                    rows="5"
+                    placeholder="Enter Movie Description"
+                ></textarea>
+            </div>
+
+
+
+            <!-- POSTER -->
+
+            <div class="inputBox">
+                <label>Poster Image</label>
+
+                <input 
+                    type="file" 
+                    name="poster"
+                    accept="image/*"
+                >
+            </div>
+
+
+
+            <!-- BANNER -->
+
+            <div class="inputBox">
+                <label>Banner Image</label>
+
+                <input 
+                    type="file" 
+                    name="banner"
+                    accept="image/*"
+                >
+            </div>
+
+
+
+            <!-- TRAILER -->
+
+            <div class="inputBox">
+                <label>Trailer URL</label>
+
+                <input 
+                    type="text" 
+                    name="trailerURI"
+                    placeholder="YouTube Trailer URL"
+                >
+            </div>
+
+
+
+            <!-- RATING -->
+
+            <div class="inputBox">
+                <label>Rating</label>
+
+                <input 
+                    type="number" 
+                    name="rating"
+                    min="0"
+                    max="10"
+                    step="0.1"
+                    placeholder="Movie Rating"
+                >
+            </div>
+
+
+
+            <!-- RELEASE YEAR -->
+
+            <div class="inputBox">
+                <label>Release Year</label>
+
+                <input 
+                    type="number" 
+                    name="releaseYear"
+                    placeholder="2025"
+                >
+            </div>
+
+
+
+            <!-- DURATION -->
+
+            <div class="inputBox">
+                <label>Duration</label>
+
+                <input 
+                    type="text" 
+                    name="duration"
+                    placeholder="2h 30m"
+                >
+            </div>
+
+
+
+            <!-- LANGUAGE -->
+
+            <div class="inputBox">
+                <label>Language</label>
+
+                <input 
+                    type="text" 
+                    name="language"
+                    placeholder="English"
+                >
+            </div>
+
+
+
+            <!-- GENRE -->
+
+            <h2 class="sectionTitle">Genres</h2>
+
+            <div id="genreContainer">
+
+                <div class="genreItem">
+
+                    <input 
+                        type="text" 
+                        name="genre[]"
+                        placeholder="Genre"
+                    >
+
+                </div>
+
+            </div>
+
+            <button 
+                type="button"
+                class="addBtn"
+                onclick="addGenre()"
+            >
+                + Add Genre
+            </button>
+
+
+
+            <!-- CAST -->
+
+            <h2 class="sectionTitle">Cast Members</h2>
+
+            <div id="castContainer">
+
+                <div class="castCard">
+
+                    <input 
+                        type="text" 
+                        name="actorName[]"
+                        placeholder="Actor Name"
+                    >
+
+                    <input 
+                        type="file" 
+                        name="actorPhoto[]"
+                        accept="image/*"
+                    >
+
+                </div>
+
+            </div>
+
+            <button 
+                type="button"
+                class="addBtn"
+                onclick="addCast()"
+            >
+                + Add Cast
+            </button>
+
+
+
+            <!-- DIRECTOR -->
+
+            <div class="inputBox">
+                <label>Director</label>
+
+                <input 
+                    type="text" 
+                    name="director"
+                    placeholder="Director Name"
+                >
+            </div>
+
+
+
+            <!-- FEATURED -->
+
+            <div class="checkbox">
+
+                <input 
+                    type="checkbox" 
+                    name="featured"
+                >
+
+                <label>Featured Movie</label>
+
+            </div>
+
+
+
+            <!-- SUBMIT -->
+
+            <button class="submitBtn">
+                Upload Movie
+            </button>
+
+        </form>
+
+    </div>
+
+
+
+    <script>
+
+        // ADD GENRE
+
+        function addGenre(){
+
+            const container = document.getElementById("genreContainer")
+
+            const div = document.createElement("div")
+
+            div.classList.add("genreItem")
+
+            div.innerHTML = `
+
+                <input 
+                    type="text" 
+                    name="genre[]"
+                    placeholder="Genre"
+                >
+
+            `
+
+            container.appendChild(div)
+        }
+
+
+
+        // ADD CAST
+
+        function addCast(){
+
+            const container = document.getElementById("castContainer")
+
+            const div = document.createElement("div")
+
+            div.classList.add("castCard")
+
+            div.innerHTML = `
+
+                <input 
+                    type="text" 
+                    name="actorName[]"
+                    placeholder="Actor Name"
+                >
+
+                <input 
+                    type="file" 
+                    name="actorPhoto[]"
+                    accept="image/*"
+                >
+
+            `
+            container.appendChild(div)
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "moviesite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+      "tailwind": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
+    "start": "npx nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.2",
+    "multer": "^2.1.1",
+    "nodemon": "^3.1.14",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
+  }
+}

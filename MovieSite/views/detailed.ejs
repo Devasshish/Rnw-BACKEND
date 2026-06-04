@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= movie.movieName %> - FILM|ZONE</title>
+    <link rel="stylesheet" href="/css/output.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #d4453a;
+            border: 2px solid #d4453a;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 100;
+        }   
+
+        .close-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .main-wrapper {
+            border: 3px solid #d4453a;
+            border-radius: 20px;
+            padding: 40px;
+            background: #1a1a2e;
+        }
+
+        .banner-section {
+            border: 3px solid #d4453a;
+            border-radius: 15px;
+            height: 300px;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .banner-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position:center;
+        }
+
+        .content-section {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .poster-box {
+            border: 3px solid #d4453a;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 350px;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .poster-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .movie-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #d4453a;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 3px;
+            font-size: 20px;
+        }
+
+        .star {
+            color: #fbbf24;
+        }
+
+        .rating-text {
+            color: #d4453a;
+            font-size: 14px;
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .info-label {
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            color: #d4453a;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .genre-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tag {
+            border: 1px solid #d4453a;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #d4453a;
+        }
+
+        .cast-section {
+            margin-top: 20px;
+        }
+
+        .cast-label {
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .cast-names {
+            color: #d4453a;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .trailer-section {
+            border: 3px solid #d4453a;
+            border-radius: 15px;
+            height: 250px;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .trailer-section:hover {
+            box-shadow: 0 0 20px rgba(212, 69, 58, 0.4);
+        }
+
+        .trailer-section video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .trailer-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .trailer-placeholder:hover {
+            background: linear-gradient(135deg, #2d5a8c 0%, #3d6aac 100%);
+        }
+
+        .play-icon {
+            font-size: 60px;
+            color: #d4453a;
+            margin-bottom: 15px;
+        }
+
+        .trailer-text {
+            color: #d4453a;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .content-section {
+                grid-template-columns: 1fr;
+            }
+
+            .main-wrapper {
+                padding: 20px;
+            }
+
+            .container {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- CLOSE BUTTON -->
+    <a href="/">
+        <button class="close-btn">×</button>
+    </a>
+
+    <div class="container">
+        <div class="main-wrapper">
+            <!-- BANNER -->
+            <div class="banner-section">
+                <img src="../uploads/<%= movie.bannerURI %>" alt="<%= movie.movieName %>">
+            </div>
+
+            <!-- CONTENT SECTION -->
+            <div class="content-section">
+                <!-- POSTER -->
+                <div class="poster-box">
+                    <img src="../uploads/<%= movie.posterURI %>" alt="<%= movie.movieName %>">
+                </div>
+
+                <!-- INFO -->
+                <div class="info-section">
+                    <h1 class="movie-title"><%= movie.movieName %></h1>
+
+                    <p class="description">
+                        <%= movie.description %>
+                    </p>
+
+                    <!-- RATING -->
+                    <div class="rating">
+                        <div class="stars">
+                            <% for(let i = 0; i < Math.floor(movie.rating); i++) { %>
+                                <span class="star">★</span>
+                            <% } %>
+                            <% if(movie.rating % 1 !== 0) { %>
+                                <span class="star">½</span>
+                            <% } %>
+                        </div>
+                        <span class="rating-text"><%= movie.rating.toFixed(1) %></span>
+                    </div>
+
+                    <!-- GENRE -->
+                    <div class="info-item">
+                        <div class="info-label">Genre</div>
+                        <div class="genre-tags">
+                            <% if(Array.isArray(movie.genre)) { %>
+                                <% movie.genre.forEach(gen => { %>
+                                    <span class="tag"><%= gen %></span>
+                                <% }); %>
+                            <% } else { %>
+                                <span class="tag"><%= movie.genre %></span>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <!-- CAST -->
+                    <div class="cast-section">
+                        <div class="cast-label">Cast</div>
+                        <div class="cast-names">
+                            <% if(Array.isArray(movie.cast) && movie.cast.length > 0) { %>
+                                <% movie.cast.forEach((actor, index) => { %>
+                                    <%= actor.actorName %><% if(index < movie.cast.length - 1) { %>, <% } %>
+                                <% }); %>
+                            <% } else { %>
+                                Not available
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <!-- RELEASE YEAR -->
+                    <div class="info-item">
+                        <div class="info-label">Release Year</div>
+                        <div class="info-value"><%= movie.releaseYear %></div>
+                    </div>
+
+                    <!-- DURATION -->
+                    <div class="info-item">
+                        <div class="info-label">Duration</div>
+                        <div class="info-value"><%= movie.duration %></div>
+                    </div>
+
+                    <!-- LANGUAGE -->
+                    <div class="info-item">
+                        <div class="info-label">Language</div>
+                        <div class="info-value"><%= movie.language %></div>
+                    </div>
+
+                    <!-- DIRECTOR -->
+                    <div class="info-item">
+                        <div class="info-label">Director</div>
+                        <div class="info-value"><%= movie.director %></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRAILER SECTION -->
+            <a href="/trailer/<%= movie._id %>" style="text-decoration: none;">
+                <div class="trailer-section">
+                    <div class="trailer-placeholder" style="background-image: url('../uploads/<%= movie.bannerURI %>'); background-repeat: no-repeat; background-size: cover;">
+                        <div class="play-icon">▶</div>
+                        <div class="trailer-text">Watch Trailer</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>
