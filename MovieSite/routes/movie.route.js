@@ -37,7 +37,7 @@ movieRouter.post(
     movieController.editMovie
 );
 
-movieRouter.get('/detailed/:id',movieController.deleteMovie)
+movieRouter.get('/detailed/:id',movieController.detailedMoviePage)
 
 movieRouter.get('/trailer/:id',movieController.trailerPage)
 
