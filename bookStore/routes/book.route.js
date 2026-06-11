@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({ storage: storage })write 
+const upload = multer({ storage: storage })
 
 // all routes
 bookRoute.get('/',bookControll.showBooks)
