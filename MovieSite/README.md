@@ -4,7 +4,7 @@ A full-stack web application for managing and displaying movies with details, tr
 
 ## 📹 Tutorial Video
 
-**Watch the explanation video here:** [Click here](#https://drive.google.com/file/d/1fotXId16pn4zinJaPD0JaxSVCLAuNVRf/view?usp=drive_link)
+**Watch the explanation video here:** [Click here](https://drive.google.com/file/d/1fotXId16pn4zinJaPD0JaxSVCLAuNVRf/view?usp=drive_link)
 
 ---
 
