@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+
+<body>
+    <% if (featuredMovies && featuredMovies.length > 0) { %>
+    <div class="bg bg-black h-screen w-full flex flex-col justify-between pl-15 "
+        style="background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),url('../uploads/<%= featuredMovies[0].bannerURI %>'); background-size: cover; background-position: center; ">
+        <nav class="flex justify-between items-center mr-15 py-4 text-amber-50">
+            <div class="left">
+                <h1 class="text-2xl font-bold">FIML|ZONE</h1>
+            </div>
+            <div class="right ">
+                <ul class="flex gap-4">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/admin">Admin</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="middle">
+            <div class="genre border-white border rounded-lg px-4 py-2 w-fit text-white text-sm" style="margin: 10px 0;">
+                <%= featuredMovies[0].genre %>
+            </div>
+            <h2 class="movieName text-white text-5xl font-bold" style="margin: 15px 0;">
+                <%= featuredMovies[0].movieName %>
+            </h2>
+            <p class="movieDescription text-white text-lg" style="margin: 5px 0;">
+                <%= featuredMovies[0].description %>
+            </p>
+            <p class=" duration text-white text-sm" style="margin: 10px 0 50px 0px;">
+                Hour: <%= featuredMovies[0].duration %>
+            </p>
+            <a href="/tailer/<%= featuredMovies[0]._id %>"  class="trailer-link" >
+
+                <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                    Watch Now
+                </button>
+            </a>
+            <a href="/detailed/<%= featuredMovies[0]._id %>" class="detail-link">
+
+                <button class="bg-white font-bold py-2 px-4 rounded" style="color: red;">
+                    Details
+                </button>
+            </a>
+            
+        </div>
+        <div class="casts flex gap-4 mt-8 -mb-8 ">
+
+
+        </div>
+        <div class=" mb-10 flex gap-5 mr-15 self-end">
+            <button class="prev px-4 py-2 text-2xl border border-white text-white bg-black rounded-lg not-only-of-type:">&lt</button>
+            <button class="next px-4 py-2 text-2xl border border-white text-white bg-black rounded-lg">&gt</button>
+        </div>
+    </div>
+    <% } else { %>
+    <div class="bg-black text-white pl-15 py-4 h-screen flex items-center justify-center">
+        <h2 class="text-3xl font-bold">No Featured Movies Available</h2>
+    </div>
+    <% } %>
+
+    <div class="bg-black text-white pl-15 py-4 h-full">
+        <h2 class="text-5xl font-bold mb-6">All Movies</h2>
+        <div class="relative mt-8">
+            <div class="movies-slider overflow-hidden">
+                <div class="movies-track-1 flex flex-wrap gap-6 transition-transform duration-300"
+                    style="transform: translateX(0);">
+                    <% movies.forEach(movie=> { %>
+                        <a href="/detailed/<%= movie._id %>">
+
+                            <div class="movie-card shrink-0" style="width: 250px; height: 400px;">
+                                <img class="rounded-lg shadow-lg cursor-pointer hover:shadow-2xl transition"
+                                style="width: 250px; height: 350px;" src="../uploads/<%= movie.posterURI %>" alt="<%= movie.movieName %>">
+                                <p class="text-white text-md text-center font-semibold mt-2 truncate">
+                                    <%= movie.movieName %>
+                                </p>
+                            </div>
+                        </a>
+                        <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    let index = 0;
+    let bg = document.querySelector('.bg');
+    let next = document.querySelector('.next');
+    let prev = document.querySelector('.prev');
+    let genre = document.querySelector('.genre');
+    let movieName = document.querySelector('.movieName');
+    let movieDescription = document.querySelector('.movieDescription');
+    let duration = document.querySelector('.duration');
+    let casts = document.querySelector('.casts');
+    let detailLink = document.querySelector('.detail-link');
+    let trailerLink = document.querySelector('.trailer-link');
+    let featuredMovies = <%- JSON.stringify(featuredMovies) %>;
+    let totalMovies = featuredMovies.length;
+    
+    if (totalMovies > 0) {
+        updateData()
+    }
+    
+    function updateData() {
+        genre.innerHTML = featuredMovies[index].genre;
+        movieName.innerHTML = featuredMovies[index].movieName;
+        movieDescription.innerHTML = featuredMovies[index].description;
+        duration.innerHTML = "Hour: " + featuredMovies[index].duration;
+        detailLink.href = "/detailed/" + featuredMovies[index]._id;
+        trailerLink.href = "/trailer/" + featuredMovies[index]._id;
+        casts.innerHTML = featuredMovies[index].cast.map(cast => `
+        <div class="cast flex flex-col items-center justify-between" style ="width:180px; height:220px">
+            <img style="width: 180px; height: 200px; object-fit:cover; object-position:top; border-radius:20px" src="uploads/${cast.actorPhoto}" alt="">
+            <h2 class="font-bold text-center text-white">
+                ${cast.actorName}
+                </h2>
+                </div>
+                `).join('');
+        bg.style.backgroundImage =
+            `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+        url('../uploads/${featuredMovies[index].bannerURI}')`;
+        ;
+    }
+
+    if (next) {
+        next.addEventListener('click', () => {
+            index++;
+            if (index > totalMovies - 1) {
+                index = 0;
+            }
+            updateData()
+        })
+    }
+
+    if (prev) {
+        prev.addEventListener('click', () => {
+            index--;
+            if (index < 0) {
+                index = totalMovies - 1;
+            }
+            updateData()
+        })
+    }
+
+</script>
+
+</html>

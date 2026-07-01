@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Zone - Edit Movie</title>
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            background-attachment: fixed;
+        }
+
+        .edit-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ef4444;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 4px solid #ef4444;
+            padding-left: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #e5e7eb;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 8px;
+            color: #e5e7eb;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #ef4444;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+            color: #d1d5db;
+        }
+
+        .cast-section {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .cast-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.4);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .cast-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .cast-number {
+            color: #ef4444;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .btn-remove-cast {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-remove-cast:hover {
+            background: #991b1b;
+            transform: scale(1.05);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(71, 85, 105, 0.5);
+            color: #e5e7eb;
+            border: 1px solid rgba(71, 85, 105, 0.8);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(71, 85, 105, 0.7);
+            border-color: rgba(71, 85, 105, 1);
+        }
+
+        .btn-add-cast {
+            background: rgba(59, 130, 246, 0.8);
+            color: white;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            padding: 10px 16px;
+            margin-top: 12px;
+        }
+
+        .btn-add-cast:hover {
+            background: rgba(59, 130, 246, 1);
+        }
+
+        .image-preview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .preview-item img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .preview-label {
+            font-size: 12px;
+            color: #9ca3af;
+            text-transform: uppercase;
+        }
+
+        .nav-bar {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(15, 23, 42, 0.8));
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(239, 68, 68, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            padding: 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+        }
+
+        .nav-left h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-right a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-right a:hover {
+            color: #ef4444;
+        }
+    </style>
+</head>
+
+<body class="text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="nav-bar sticky top-0 z-50">
+        <div class="nav-content">
+            <div class="nav-left">
+                <h1>FILM<span class="text-red-500">|</span>ZONE</h1>
+            </div>
+            <div class="nav-right">
+                <a href="/">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="/admin">
+                    <i class="fas fa-dashboard"></i> Admin
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="edit-container px-6 py-12">
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-4xl font-bold mb-2">
+                <i class="fas fa-edit text-red-500"></i> Edit Movie
+            </h2>
+            <p class="text-gray-400">Update movie details and information</p>
+        </div>
+
+        <form action="/edit/<%= movie._id %>" method="POST" enctype="multipart/form-data">
+            <!-- Basic Information Section -->
+            <h3 class="section-title">
+                <i class="fas fa-info-circle"></i> Basic Information
+            </h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="movieName">Movie Name *</label>
+                    <input type="text" id="movieName" name="movieName" value="<%= movie.movieName %>"
+                        placeholder="Enter movie name" required>
+                </div>
+                <div class="form-group">
+                    <label for="genre">Genre *</label>
+                    <input type="text" id="genre" name="genre" value="<%= movie.genre %>"
+                        placeholder="e.g., Action, Drama, Comedy" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description *</label>
+                <textarea id="description" name="description" placeholder="Enter movie description"
+                    required><%= movie.description %></textarea>
+            </div>
+
+            <!-- Release Information Section -->
+            <h3 class="section-title">
+                <i class="fas fa-calendar"></i> Release Information
+            </h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="releaseYear">Release Year *</label>
+                    <input type="number" id="releaseYear" name="releaseYear" value="<%= movie.releaseYear %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration (hours) *</label>
+                    <input type="text" id="duration" name="duration" value="<%= movie.duration %>"
+                        placeholder="e.g., 2.5" step="0.5" required>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <h3 class="section-title">
+                <i class="fas fa-image"></i> Media Files
+            </h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="poster">Poster Image</label>
+                    <input type="file" id="poster" name="poster" accept="image/*">
+                    <p class="text-xs text-gray-500 mt-2">Current: <%= movie.posterURI %>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="banner">Banner Image</label>
+                    <input type="file" id="banner" name="banner" accept="image/*">
+                    <p class="text-xs text-gray-500 mt-2">Current: <%= movie.bannerURI %>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Status Section -->
+            <h3 class="section-title">
+                <i class="fas fa-star"></i> Status & Features
+            </h3>
+
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="featured" name="featured" <%=movie.featured ? 'checked' : '' %>
+                    >
+                    <label for="featured">Featured Movie</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="isTrending" name="isTrending" <%=movie.isTrending ? 'checked' : '' %>
+                    >
+                    <label for="isTrending">Trending</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="isPopular" name="isPopular" <%=movie.isPopular ? 'checked' : '' %>
+                    >
+                    <label for="isPopular">Popular</label>
+                </div>
+            </div>
+
+            <!-- Cast Section -->
+            <h3 class="section-title">
+                <i class="fas fa-users"></i> Cast Members
+            </h3>
+
+            <div class="cast-section" id="castContainer">
+                <% movie.cast.forEach((cast, index)=> { %>
+                    <div class="cast-card">
+                        <div class="cast-header">
+                            <span class="cast-number">Cast Member <%= index + 1 %></span>
+                            <button type="button" class="btn-remove-cast" onclick="removeCast(this)">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Actor Name</label>
+                                <input type="text" name="castName[]" value="<%= cast.actorName %>"
+                                    placeholder="Enter actor name">
+                            </div>
+                            <div class="form-group">
+                                <label>Character Name</label>
+                                <input type="text" name="castCharacter[]" value="<%= cast.characterName || '' %>"
+                                    placeholder="Enter character name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Actor Photo</label>
+                            <input type="file" name="castPhoto[]" accept="image/*">
+                            <% if(cast.actorPhoto) { %>
+                                <p class="text-xs text-gray-500 mt-2">Current: <%= cast.actorPhoto %>
+                                </p>
+                                <% } %>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+
+            <button type="button" class="btn-add-cast" onclick="addCast()">
+                <i class="fas fa-plus"></i> Add Cast Member
+            </button>
+
+            <!-- Action Buttons -->
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+                <a href="/admin" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function addCast() {
+            const castContainer = document.getElementById('castContainer');
+            const castIndex = castContainer.children.length;
+
+            const castCard = document.createElement('div');
+            castCard.className = 'cast-card';
+            castCard.innerHTML = `
+                <div class="cast-header">
+                    <span class="cast-number">Cast Member ${castIndex + 1}</span>
+                    <button type="button" class="btn-remove-cast" onclick="removeCast(this)">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Actor Name</label>
+                        <input 
+                            type="text" 
+                            name="castName[]" 
+                            placeholder="Enter actor name"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label>Character Name</label>
+                        <input 
+                            type="text" 
+                            name="castCharacter[]" 
+                            placeholder="Enter character name"
+                        >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Actor Photo</label>
+                    <input 
+                        type="file" 
+                        name="castPhoto[]" 
+                        accept="image/*"
+                    >
+                </div>
+            `;
+
+            castContainer.appendChild(castCard);
+        }
+
+        function removeCast(button) {
+            button.closest('.cast-card').remove();
+        }
+    </script>
+</body>
+
+</html>

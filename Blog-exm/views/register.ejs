@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Register | BlogCenter</title>
+  <%- include('head') %>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen relative overflow-hidden">
+  <!-- Abstract Background Elements -->
+  <div class="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-accent/20 blur-[120px] rounded-full pointer-events-none"></div>
+  <div class="absolute bottom-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/20 blur-[120px] rounded-full pointer-events-none"></div>
+
+  <div class="absolute top-0 w-full z-50">
+    <%- include('navbar', { user: user }) %>
+  </div>
+  
+  <main class="w-full max-w-md px-6 mt-32 relative z-10 my-20">
+    <div class="glass-card fade-up !p-10">
+      <h1 class="page-title text-4xl font-black text-center mb-3 text-white tracking-tight">Join BlogCenter.</h1>
+      <p class="text-center text-slate-400 mb-10 font-light">Share your stories with a premium community.</p>
+      
+      <% if (typeof error !== 'undefined') { %>
+        <div class="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded-xl mb-8 text-center text-sm font-medium fade-up">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <form action="/register" method="POST">
+        <div class="mb-6 fade-up" style="transition-delay: 0.1s">
+          <label for="username" class="block text-xs uppercase tracking-widest font-bold mb-2 text-slate-400">Username</label>
+          <input type="text" id="username" name="username" class="form-input" required placeholder="Choose a username">
+        </div>
+        
+        <div class="mb-6 fade-up" style="transition-delay: 0.2s">
+          <label for="password" class="block text-xs uppercase tracking-widest font-bold mb-2 text-slate-400">Password</label>
+          <input type="password" id="password" name="password" class="form-input" required placeholder="Create a strong password">
+        </div>
+        
+        <div class="fade-up" style="transition-delay: 0.3s">
+          <button type="submit" class="btn-primary w-full text-lg py-4">Create Account</button>
+        </div>
+      </form>
+      
+      <p class="text-center mt-8 text-slate-500 fade-up" style="transition-delay: 0.5s">
+        Already have an account? <a href="/login" class="text-white font-medium hover:text-primary transition-colors">Sign in</a>
+      </p>
+    </div>
+  </main>
+
+  <%- include('scripts') %>
+</body>
+</html>

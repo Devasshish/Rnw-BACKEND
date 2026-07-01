@@ -1,0 +1,28 @@
+<nav class="navbar-container sticky top-0 z-50 flex flex-col md:flex-row justify-between items-center py-4 px-8 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
+  <a href="/" class="text-2xl font-black text-primary tracking-tighter mb-4 md:mb-0 hover:scale-105 transition-transform duration-300">BlogCenter.</a>
+  <ul class="flex flex-wrap items-center justify-center gap-8">
+    <li><a href="/" class="font-medium text-sm uppercase tracking-widest transition text-slate-400 hover:text-white">Home</a></li>
+    <% if (user) { %>
+      <li><a href="/my-articles" class="font-medium text-sm uppercase tracking-widest transition text-slate-400 hover:text-white">My Articles</a></li>
+      <li><a href="/articles/new" class="font-medium text-sm uppercase tracking-widest transition text-slate-400 hover:text-white">Write Article</a></li>
+      <% if (user.role === 'admin') { %>
+        <li><a href="/admin" class="font-medium text-sm uppercase tracking-widest transition text-accent hover:text-white">Dashboard</a></li>
+      <% } %>
+      <li>
+        <a href="/logout" class="px-5 py-2 rounded-full border border-white/10 text-slate-300 text-sm font-medium transition hover:bg-white/10 hover:text-white">Sign Out</a>
+      </li>
+      <li>
+        <span class="text-primary font-bold text-sm ml-2 border-l border-white/10 pl-6">
+          <%= user.username %> <span class="text-slate-500 font-light text-xs uppercase tracking-widest"><%= user.role %></span>
+        </span>
+      </li>
+    <% } else { %>
+      <li>
+        <a href="/login" class="px-5 py-2 rounded-full border border-white/10 text-slate-300 text-sm font-medium transition hover:bg-white/10 hover:text-white">Log In</a>
+      </li>
+      <li>
+        <a href="/register" class="btn-primary text-sm py-2 px-6">Sign Up</a>
+      </li>
+    <% } %>
+  </ul>
+</nav>

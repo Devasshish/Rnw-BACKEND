@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= article.title %> | BlogCenter</title>
+  <%- include('head') %>
+</head>
+<body>
+  <%- include('navbar', { user: user }) %>
+  
+  <main class="max-w-4xl mx-auto my-20 px-6 w-full flex-1 relative">
+    <header class="border-b border-white/10 pb-12 mb-16 fade-up relative">
+      <% if (user && user.role === 'admin') { %>
+        <form action="/admin/articles/<%= article._id %>/delete" method="POST" class="absolute top-0 right-0 z-20" onsubmit="return confirm('Delete this article?');">
+          <button type="submit" class="px-4 py-2 border border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-500/50 transition rounded-full text-xs font-bold uppercase tracking-widest">Delete Article</button>
+        </form>
+      <% } %>
+      <h1 class="page-title text-5xl md:text-7xl font-black mb-8 text-white tracking-tight leading-tight pt-10"><%= article.title %></h1>
+      <div class="flex items-center gap-4 text-slate-400 font-medium">
+        <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-lg">
+          <%= article.author ? article.author.username.charAt(0).toUpperCase() : 'U' %>
+        </div>
+        <div>
+          <p class="text-white text-lg"><%= article.author ? article.author.username : 'Unknown' %></p>
+          <p class="text-sm"><%= article.createdAt.toDateString() %></p>
+        </div>
+      </div>
+    </header>
+    
+    <article class="text-xl md:text-2xl text-slate-300 leading-relaxed font-light mb-24 whitespace-pre-wrap fade-up" style="transition-delay: 0.2s"><%= article.content %></article>
+
+    <section class="border-t border-white/10 pt-16 fade-up">
+      <h2 class="text-3xl font-bold mb-10 text-white flex items-center gap-4">
+        Responses <span class="bg-white/10 text-slate-300 text-sm py-1 px-3 rounded-full"><%= article.comments.length %></span>
+      </h2>
+      
+      <% if (user) { %>
+        <form action="/articles/<%= article._id %>/comments" method="POST" class="mb-16">
+          <div class="mb-6">
+            <textarea name="text" class="form-input min-h-[150px] text-lg" required placeholder="What are your thoughts?"></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Post Response</button>
+        </form>
+      <% } else { %>
+        <div class="mb-16 p-8 bg-white/[0.02] rounded-2xl border border-white/[0.05] text-center">
+          <p class="text-slate-400 text-lg">
+            Please <a href="/login" class="text-primary font-semibold hover:underline">log in</a> to join the conversation.
+          </p>
+        </div>
+      <% } %>
+
+      <div class="space-y-8">
+        <% article.comments.forEach(comment => { %>
+          <div class="stagger-item p-8 rounded-2xl bg-white/[0.02] border border-white/[0.05] relative overflow-hidden group hover:border-primary/30 transition-colors">
+            <div class="absolute left-0 top-0 bottom-0 w-1 bg-accent/50 group-hover:bg-accent transition-colors"></div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white font-bold text-sm">
+                  <%= comment.author ? comment.author.username.charAt(0).toUpperCase() : 'U' %>
+                </div>
+                <div>
+                  <p class="font-bold text-white"><%= comment.author ? comment.author.username : 'Unknown' %></p>
+                  <p class="text-xs text-slate-500 uppercase tracking-widest"><%= comment.createdAt.toDateString() %></p>
+                </div>
+              </div>
+              <% if (user && user.role === 'admin') { %>
+                <form action="/admin/comments/<%= comment._id %>/delete" method="POST" onsubmit="return confirm('Delete this comment?');">
+                  <button type="submit" class="text-red-400 hover:text-red-300 text-xs font-bold uppercase tracking-widest transition">Delete</button>
+                </form>
+              <% } %>
+            </div>
+            <p class="text-slate-300 text-lg leading-relaxed font-light"><%= comment.text %></p>
+          </div>
+        <% }) %>
+      </div>
+    </section>
+  </main>
+
+  <%- include('scripts') %>
+</body>
+</html>

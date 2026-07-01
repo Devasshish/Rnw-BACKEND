@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .glass-card {
+    @apply bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] rounded-2xl p-8 shadow-2xl transition duration-500 hover:border-primary/50 relative overflow-hidden;
+  }
+  
+  .glass-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 transition-opacity duration-500 pointer-events-none;
+  }
+  
+  .glass-card:hover::before {
+    @apply opacity-100;
+  }
+  
+  .btn-primary {
+    @apply relative overflow-hidden bg-primary text-white font-medium py-3 px-8 rounded-full transition-all duration-300 inline-flex justify-center items-center cursor-pointer;
+  }
+
+  .btn-primary:hover {
+    @apply shadow-[0_0_20px_rgba(59,130,246,0.4)] scale-105;
+  }
+  
+  .form-input {
+    @apply w-full p-4 rounded-xl bg-white/[0.03] border border-white/[0.05] text-slate-100 placeholder-slate-500 focus:outline-none focus:border-primary focus:bg-white/[0.05] transition duration-300;
+  }
+}
+
+body {
+  @apply bg-[#050505] text-slate-200 font-inter min-h-screen flex flex-col selection:bg-primary selection:text-white;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+/* Animations base classes */
+.reveal-text, .fade-up, .stagger-item {
+  opacity: 0;
+  visibility: hidden;
+}

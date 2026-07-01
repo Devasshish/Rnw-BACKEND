@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Write Article | BlogCenter</title>
+  <%- include('head') %>
+</head>
+<body>
+  <%- include('navbar', { user: user }) %>
+  
+  <main class="max-w-3xl mx-auto my-20 px-6 w-full flex-1">
+    <div class="glass-card fade-up !p-10 md:!p-16">
+      <h1 class="page-title text-4xl md:text-5xl font-black tracking-tighter mb-12 bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent">
+        Write a New Story.
+      </h1>
+      
+      <form action="/articles/new" method="POST">
+        <div class="mb-8 fade-up" style="transition-delay: 0.1s">
+          <label for="title" class="block text-sm uppercase tracking-widest font-bold mb-3 text-slate-400">Title</label>
+          <input type="text" id="title" name="title" class="form-input text-xl font-medium" required placeholder="An engaging title...">
+        </div>
+        
+        <div class="mb-12 fade-up" style="transition-delay: 0.2s">
+          <label for="content" class="block text-sm uppercase tracking-widest font-bold mb-3 text-slate-400">Content</label>
+          <textarea id="content" name="content" class="form-input min-h-[350px] text-lg font-light leading-relaxed" required placeholder="Tell your story..."></textarea>
+        </div>
+        
+        <div class="fade-up" style="transition-delay: 0.3s">
+          <button type="submit" class="btn-primary w-full text-lg py-4 tracking-wide">Publish Story</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <%- include('scripts') %>
+</body>
+</html>

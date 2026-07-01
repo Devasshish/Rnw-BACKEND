@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Dashboard | BlogCenter</title>
+  <%- include('head') %>
+</head>
+<body>
+  <%- include('navbar', { user: user }) %>
+  
+  <main class="max-w-5xl mx-auto my-20 px-6 w-full flex-1">
+    <div class="text-center mb-16 fade-up">
+      <h1 class="page-title text-5xl font-black tracking-tighter mb-4 text-white">
+        Admin Command Center
+      </h1>
+      <p class="text-slate-400 font-light">Manage users, articles, and community interactions.</p>
+    </div>
+
+    <!-- Users Section -->
+    <section class="mb-20 fade-up" style="transition-delay: 0.1s">
+      <h2 class="text-3xl font-bold mb-8 text-white border-b border-white/10 pb-4 text-center">Manage Users</h2>
+      <div class="glass-card !p-0 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-white/5 text-slate-300">
+              <tr>
+                <th class="p-4 font-semibold text-sm uppercase tracking-wider text-center">Username</th>
+                <th class="p-4 font-semibold text-sm uppercase tracking-wider text-center">Role</th>
+                <th class="p-4 font-semibold text-sm uppercase tracking-wider text-center">Joined</th>
+                <th class="p-4 font-semibold text-sm uppercase tracking-wider text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-slate-400">
+              <% users.forEach(u => { %>
+                <tr class="hover:bg-white/[0.02] transition-colors text-center">
+                  <td class="p-4 font-medium text-white"><%= u.username %></td>
+                  <td class="p-4">
+                    <span class="<%= u.role === 'admin' ? 'text-accent' : 'text-primary' %> font-bold text-xs uppercase tracking-widest bg-white/5 py-1 px-3 rounded-full inline-block"><%= u.role %></span>
+                  </td>
+                  <td class="p-4"><%= u.createdAt.toDateString() %></td>
+                  <td class="p-4">
+                    <% if(u._id.toString() !== user.id) { %>
+                      <form action="/admin/users/<%= u._id %>/delete" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this user and all their content?');">
+                        <button type="submit" class="text-red-400 hover:text-red-300 font-medium text-sm transition">Delete</button>
+                      </form>
+                    <% } else { %>
+                      <span class="text-slate-600 text-sm italic">You</span>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section class="mb-20 fade-up" style="transition-delay: 0.2s">
+      <h2 class="text-3xl font-bold mb-8 text-white border-b border-white/10 pb-4 text-center">Manage Articles</h2>
+      <div class="glass-card !p-0 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-white/5 text-slate-300">
+              <tr>
+                <th class="p-4 font-semibold text-sm uppercase tracking-wider text-center">Title</th>
+                <th class="p-4 font-semibold text-sm uppercase tracking-wider text-center">Author</th>
+                <th class="p-4 font-semibold text-sm uppercase tracking-wider text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-slate-400">
+              <% articles.forEach(a => { %>
+                <tr class="hover:bg-white/[0.02] transition-colors text-center">
+                  <td class="p-4 text-white line-clamp-1 mx-auto max-w-[250px]"><a href="/articles/<%= a._id %>" class="hover:text-primary transition"><%= a.title %></a></td>
+                  <td class="p-4"><%= a.author ? a.author.username : 'Unknown' %></td>
+                  <td class="p-4">
+                    <form action="/admin/articles/<%= a._id %>/delete" method="POST" class="inline" onsubmit="return confirm('Delete this article?');">
+                      <button type="submit" class="text-red-400 hover:text-red-300 font-medium text-sm transition">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('scripts') %>
+</body>
+</html>
