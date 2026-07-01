@@ -2,6 +2,12 @@
 
 A full-stack web application for managing and displaying movies with details, trailers, ratings, and cast information. Built with Node.js, Express, MongoDB, and Tailwind CSS.
 
+## 📹 Tutorial Video
+
+**Watch the explanation video here:** [Click here](https://drive.google.com/file/d/1fotXId16pn4zinJaPD0JaxSVCLAuNVRf/view?usp=drive_link)
+
+---
+
 ## Features
 
 - 🎬 **Movie Management**: Add, edit, and delete movies
