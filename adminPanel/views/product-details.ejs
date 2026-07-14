@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { padding-top: 70px; }
+        .product-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom fixed-top" style="background-color: rgba(30, 30, 30, 0.95); backdrop-filter: blur(10px); border-color: var(--border-color)!important;">
+        <div class="container">
+            <a class="navbar-brand" href="/" style="color: var(--primary-color); font-weight: 700; font-size: 1.5rem;">
+                <i class="fas fa-couch me-2"></i>FurnShop
+            </a>
+            <div class="ms-auto">
+                <a href="/#products" class="btn btn-outline-light btn-sm"><i class="fas fa-arrow-left me-2"></i>Back to Collection</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <img src="<%= product.image %>" alt="<%= product.name %>" class="product-image">
+            </div>
+            <div class="col-md-6 px-md-5">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/" class="text-muted text-decoration-none">Home</a></li>
+                        <li class="breadcrumb-item"><span class="text-muted"><%= product.category ? product.category.name : 'Category' %></span></li>
+                        <li class="breadcrumb-item active" aria-current="page" style="color: var(--primary-color);"><%= product.name %></li>
+                    </ol>
+                </nav>
+                
+                <h1 class="display-4 fw-bold mb-3"><%= product.name %></h1>
+                <h2 class="mb-4" style="color: var(--primary-color); font-weight: 600;">$<%= product.price.toLocaleString() %></h2>
+                
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge" style="background-color: var(--primary-color); color: #000; font-size: 0.9rem; padding: 8px 12px;">
+                        <i class="fas fa-tag me-2"></i><%= product.category ? product.category.name : 'Premium' %>
+                    </span>
+                    <% if(product.subcategory) { %>
+                        <span class="badge bg-secondary border border-secondary" style="font-size: 0.9rem; padding: 8px 12px;">
+                            <%= product.subcategory.name %>
+                        </span>
+                    <% } %>
+                    <% if(product.extraCategory) { %>
+                        <span class="badge bg-dark border border-secondary" style="font-size: 0.9rem; padding: 8px 12px;">
+                            <%= product.extraCategory.name %>
+                        </span>
+                    <% } %>
+                </div>
+
+                <div class="card p-4 shadow-sm mb-4" style="background-color: var(--bg-card); border-color: var(--border-color);">
+                    <h5 class="mb-3">Product Description</h5>
+                    <p class="text-muted mb-0" style="line-height: 1.8; font-size: 1.05rem;"><%= product.description %></p>
+                </div>
+
+                <div class="mt-4 d-flex gap-3">
+                    <button class="btn btn-primary btn-lg flex-grow-1 rounded-pill" onclick="alert('Item added to cart!')">
+                        <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                    </button>
+                    <button class="btn btn-outline-light btn-lg rounded-circle" style="width: 50px; height: 50px;" onclick="alert('Added to wishlist!')">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

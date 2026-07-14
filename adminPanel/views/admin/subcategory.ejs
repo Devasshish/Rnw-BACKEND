@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-between align-items-center mb-5 mt-4 animate-fade-up">
+    <h2 class="m-0 fw-bold" style="letter-spacing: -0.5px;"><%= title %></h2>
+    <button class="btn btn-primary rounded-pill shadow-sm px-4" data-bs-toggle="modal" data-bs-target="#addModal"><i class="fas fa-plus me-2"></i>Add Subcategory</button>
+</div>
+
+<div class="glass-panel p-4 animate-fade-up" style="animation-delay: 0.1s;">
+    <table class="table table-dark table-hover mb-0">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% subcategories.forEach((subcategory, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= subcategory.name %></td>
+                    <td><%= subcategory.category ? subcategory.category.name : 'N/A' %></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal<%= subcategory._id %>"><i class="fas fa-edit"></i></button>
+                        <form action="/subcategory/<%= subcategory._id %>/delete" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+
+                <!-- Edit Modal -->
+                <div class="modal fade" id="editModal<%= subcategory._id %>" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="background-color: var(--bg-card);">
+                            <form action="/subcategory/<%= subcategory._id %>/update" method="POST">
+                                <div class="modal-header border-bottom-0">
+                                    <h5 class="modal-title">Edit Subcategory</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">Category</label>
+                                        <select class="form-select" name="category" required>
+                                            <% categories.forEach(cat => { %>
+                                                <option value="<%= cat._id %>" <%= (subcategory.category && subcategory.category._id.toString() === cat._id.toString()) ? 'selected' : '' %>><%= cat.name %></option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control" name="name" value="<%= subcategory.name %>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-control" name="description"><%= subcategory.description %></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer border-top-0">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: var(--bg-card);">
+            <form action="/subcategory" method="POST">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title">Add Subcategory</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" name="category" required>
+                            <option value="">Select Category</option>
+                            <% categories.forEach(cat => { %>
+                                <option value="<%= cat._id %>"><%= cat.name %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Subcategory</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

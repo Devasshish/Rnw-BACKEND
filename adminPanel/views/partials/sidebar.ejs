@@ -1,0 +1,37 @@
+<div class="d-flex flex-column pt-4 h-100 position-relative">
+    <a href="/dashboard" class="text-decoration-none text-center mb-5 mt-2 px-3">
+        <h3 class="m-0" style="color: var(--primary-color); font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 0 15px rgba(212,175,55,0.2);">
+            <i class="fas fa-couch me-2"></i>FurnShop
+        </h3>
+    </a>
+    <ul class="nav flex-column mb-auto">
+        <li class="nav-item">
+            <a href="/dashboard" class="nav-link <%= title === 'Dashboard' ? 'active' : '' %>">
+                <i class="fas fa-tachometer-alt fa-fw me-2"></i> Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/category" class="nav-link <%= title === 'Manage Categories' ? 'active' : '' %>">
+                <i class="fas fa-list fa-fw me-2"></i> Categories
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/subcategory" class="nav-link <%= title === 'Manage Subcategories' ? 'active' : '' %>">
+                <i class="fas fa-sitemap fa-fw me-2"></i> Subcategories
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/extracategory" class="nav-link <%= title === 'Manage Extra Categories' ? 'active' : '' %>">
+                <i class="fas fa-tags fa-fw me-2"></i> Extra Categories
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/product" class="nav-link <%= title === 'Manage Products' ? 'active' : '' %>">
+                <i class="fas fa-box-open fa-fw me-2"></i> Products
+            </a>
+        </li>
+    </ul>
+    <div class="p-4 text-center text-muted" style="font-size: 0.8rem;">
+        &copy; 2026 FurnShop Furniture
+    </div>
+</div>

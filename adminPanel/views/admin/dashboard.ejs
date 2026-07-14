@@ -1,0 +1,63 @@
+<div class="d-flex justify-content-between align-items-center mb-5 mt-4 animate-fade-up">
+    <div>
+        <h2 class="m-0 fw-bold" style="letter-spacing: -0.5px;">Dashboard Overview</h2>
+        <p class="text-muted m-0 mt-1" style="font-size: 0.95rem;">Welcome back, <span style="color: var(--primary-color);"><%= user.name %></span>. Here's what's happening with your store today.</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <!-- Products Stat -->
+    <div class="col-md-6">
+        <div class="glass-panel p-4 position-relative overflow-hidden h-100 animate-fade-up" style="animation-delay: 0.1s;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3);">
+                    <i class="fas fa-box fs-5" style="color: var(--primary-color);"></i>
+                </div>
+                <h4 class="m-0 text-muted fs-6 text-uppercase" style="letter-spacing: 1px;">Products</h4>
+            </div>
+            <h2 class="display-5 fw-bold m-0"><%= productCount %></h2>
+        </div>
+    </div>
+    
+    <!-- Categories Stat -->
+    <div class="col-md-6">
+        <div class="glass-panel p-4 position-relative overflow-hidden h-100 animate-fade-up" style="animation-delay: 0.2s;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px; background: rgba(76, 175, 80, 0.1); border: 1px solid rgba(76, 175, 80, 0.3);">
+                    <i class="fas fa-list fs-5" style="color: #4caf50;"></i>
+                </div>
+                <h4 class="m-0 text-muted fs-6 text-uppercase" style="letter-spacing: 1px;">Categories</h4>
+            </div>
+            <h2 class="display-5 fw-bold m-0"><%= categoryCount %></h2>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 animate-fade-up" style="animation-delay: 0.4s;">
+    <!-- Recent Activity -->
+    <div class="col-12">
+        <div class="glass-panel p-4 h-100">
+            <h4 class="mb-4 fw-bold" style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">Recent Activity</h4>
+            <div class="list-group list-group-flush" style="background-color: transparent;">
+                <% if (activities && activities.length > 0) { %>
+                    <% activities.forEach(activity => { %>
+                        <div class="list-group-item bg-transparent text-white border-0 py-3 d-flex align-items-center" style="border-bottom: 1px solid rgba(255,255,255,0.05)!important;">
+                            <div class="rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 42px; height: 42px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                                <i class="fas <%= activity.icon %>" style="font-size: 1.1rem;"></i> 
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="m-0" style="font-weight: 500; font-size: 1rem;"><%= activity.text %></h6>
+                                <small class="text-muted" style="font-size: 0.85rem;"><%= new Date(activity.date).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) %></small>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="text-center py-5 text-muted">
+                        <i class="fas fa-history fa-3x mb-3" style="opacity: 0.2;"></i>
+                        <p class="m-0">No recent activity found.</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const Article = require('../models/Article');
 const Comment = require('../models/Comment');
-
+// get dashboard controller
 exports.getDashboard = async (req, res) => {
   try {
     const users = await User.find().select('-password');
@@ -20,6 +20,8 @@ exports.getDashboard = async (req, res) => {
   }
 };
 
+
+// delete user controller  
 exports.deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -40,6 +42,7 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
+// delete article controller
 exports.deleteArticle = async (req, res) => {
   try {
     const articleId = req.params.id;
@@ -59,6 +62,7 @@ exports.deleteArticle = async (req, res) => {
   }
 };
 
+// delete comment controller
 exports.deleteComment = async (req, res) => {
   try {
     const commentId = req.params.id;

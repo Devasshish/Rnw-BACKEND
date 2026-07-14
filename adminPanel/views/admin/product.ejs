@@ -1,0 +1,180 @@
+<div class="d-flex justify-content-between align-items-center mb-5 mt-4 animate-fade-up">
+    <h2 class="m-0 fw-bold" style="letter-spacing: -0.5px;"><%= title %></h2>
+    <button class="btn btn-primary rounded-pill shadow-sm px-4" data-bs-toggle="modal" data-bs-target="#addModal"><i class="fas fa-plus me-2"></i>Add Product</button>
+</div>
+
+<div class="glass-panel p-4 animate-fade-up" style="animation-delay: 0.1s;">
+    <table class="table table-dark table-hover mb-0">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Extra Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% products.forEach(product => { %>
+                <tr>
+                    <td>
+                        <img src="<%= product.image %>" alt="<%= product.name %>" width="50" height="50" style="object-fit: cover; border-radius: 5px;">
+                    </td>
+                    <td><%= product.name %></td>
+                    <td>$<%= product.price %></td>
+                    <td><%= product.category ? product.category.name : 'N/A' %></td>
+                    <td><%= product.subcategory ? product.subcategory.name : 'N/A' %></td>
+                    <td><%= product.extraCategory ? product.extraCategory.name : 'N/A' %></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal<%= product._id %>"><i class="fas fa-edit"></i></button>
+                        <form action="/product/<%= product._id %>/delete" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+
+                <!-- Edit Modal -->
+                <div class="modal fade" id="editModal<%= product._id %>" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="background-color: var(--bg-card);">
+                            <form action="/product/<%= product._id %>/update" method="POST" enctype="multipart/form-data">
+                                <div class="modal-header border-bottom-0">
+                                    <h5 class="modal-title">Edit Product</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control" name="name" value="<%= product.name %>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Price</label>
+                                        <input type="number" class="form-control" name="price" value="<%= product.price %>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Image (Leave blank to keep current)</label>
+                                        <input type="file" class="form-control" name="image">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-control" name="description" required><%= product.description %></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer border-top-0">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: var(--bg-card);">
+            <form action="/product" method="POST" enctype="multipart/form-data">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title">Add Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" id="productCategorySelect" name="category" required>
+                            <option value="">Select Category</option>
+                            <% categories.forEach(cat => { %>
+                                <option value="<%= cat._id %>"><%= cat.name %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Subcategory</label>
+                        <select class="form-select" id="productSubcategorySelect" name="subcategory" required>
+                            <option value="">Select Subcategory First</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Extra Category (Optional)</label>
+                        <select class="form-select" id="productExtraCategorySelect" name="extraCategory">
+                            <option value="">Select Extra Category First</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Price</label>
+                        <input type="number" class="form-control" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Image</label>
+                        <input type="file" class="form-control" name="image" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Extra logic for the Product Add Modal cascading dropdowns
+        const catSelect = document.getElementById('productCategorySelect');
+        const subSelect = document.getElementById('productSubcategorySelect');
+        const extraSelect = document.getElementById('productExtraCategorySelect');
+
+        if(catSelect) {
+            catSelect.addEventListener('change', function() {
+                const catId = this.value;
+                if(catId) {
+                    fetch('/subcategory/by-category/' + catId)
+                        .then(res => res.json())
+                        .then(data => {
+                            subSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                            data.forEach(sub => {
+                                subSelect.innerHTML += `<option value="${sub._id}">${sub.name}</option>`;
+                            });
+                            extraSelect.innerHTML = '<option value="">Select Extra Category First</option>';
+                        });
+                } else {
+                    subSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                    extraSelect.innerHTML = '<option value="">Select Extra Category First</option>';
+                }
+            });
+        }
+
+        if(subSelect) {
+            subSelect.addEventListener('change', function() {
+                const subId = this.value;
+                if(subId) {
+                    fetch('/extracategory/by-subcategory/' + subId)
+                        .then(res => res.json())
+                        .then(data => {
+                            extraSelect.innerHTML = '<option value="">Select Extra Category (Optional)</option>';
+                            data.forEach(extra => {
+                                extraSelect.innerHTML += `<option value="${extra._id}">${extra.name}</option>`;
+                            });
+                        });
+                } else {
+                    extraSelect.innerHTML = '<option value="">Select Extra Category (Optional)</option>';
+                }
+            });
+        }
+    });
+</script>
